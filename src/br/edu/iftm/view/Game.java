@@ -60,9 +60,12 @@ public class Game extends BasicGame{
 		Input input = container.getInput();
 		input.enableKeyRepeat();
 		
-		for (Tiro shot : shots) 
+		for(int i=0; i < shots.size(); i++)
 		{
-			shot.moveShot(delta);
+			if(!shots.get(i).moveShot(delta))
+			{
+				shots.remove(i);
+			}
 		}
 		
 		if(input.isKeyPressed(Input.KEY_W))
@@ -94,7 +97,6 @@ public class Game extends BasicGame{
 		
 		if(input.isKeyPressed(Input.KEY_UP))
 		{
-			System.out.println("Atirou");
 			Tiro shot = new Tiro(hero.getPosition(), hero.getDir());
 			shots.add(shot);
 		}

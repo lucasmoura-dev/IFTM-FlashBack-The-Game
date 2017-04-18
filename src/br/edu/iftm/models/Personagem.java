@@ -112,13 +112,13 @@ public class Personagem {
 				move(0, 10 * -SPEED * delta);
 				break;
 			case SPRITE_DOWN:
-				
+				move(0, 10 * SPEED * delta);
 				break;
 			case SPRITE_LEFT:
-				
+				move(10 * -SPEED * delta, 0);
 				break;
 			case SPRITE_RIGHT:
-				
+				move(10 * SPEED * delta, 0);
 				break;
 		}
 	}

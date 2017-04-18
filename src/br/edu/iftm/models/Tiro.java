@@ -66,31 +66,33 @@ public class Tiro {
 		image.draw(position.getX(), position.getY());
 	}
 	
-	public void moveShot(int delta)
+	public boolean moveShot(int delta)
 	{
 		switch(dir)
 		{
 			case Personagem.SPRITE_UP:
-				move(0, -SPEED * delta);
-				break;
+				return move(0, -SPEED * delta);
 			case Personagem.SPRITE_DOWN:
-				move(0, SPEED * delta);
-				break;
+				return move(0, SPEED * delta);
 			case Personagem.SPRITE_LEFT:
-				move(-SPEED * delta, 0);
-				break;
+				return move(-SPEED * delta, 0);
 			case Personagem.SPRITE_RIGHT:
-				move(SPEED * delta, 0);
-				break;
+				return move(SPEED * delta, 0);
 		}
+		return false;
 	}
 	
-	private void move(float movX, float movY)
+	private boolean move(float movX, float movY)
 	{
 		if(Window.isInside(new Point(position.getX() + movX, position.getY() + movY), image.getWidth(), image.getHeight()))
 		{
 			position.setX(position.getX() + movX);
 			position.setY(position.getY() + movY);
+			return true;
+		}
+		else
+		{
+			return false;
 		}
 	}
 	
