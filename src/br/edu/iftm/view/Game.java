@@ -1,5 +1,7 @@
 package br.edu.iftm.view;
 
+import java.util.ArrayList;
+
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.BasicGame;
 import org.newdawn.slick.GameContainer;
@@ -10,12 +12,13 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.command.BasicCommand;
 import org.newdawn.slick.command.Command;
+
+import br.edu.iftm.controllers.Window;
 import br.edu.iftm.models.Personagem;
+import br.edu.iftm.models.Tiro;
 
 public class Game extends BasicGame{
-	public static final int WIDTH = 800;
-	public static final int HEIGHT = 600;
-	public static final int FPS = 60;
+	
 	private Command attack = new BasicCommand("attack");
 	private Command special = new BasicCommand("special");
 	private Command jump = new BasicCommand("jump");
@@ -24,9 +27,10 @@ public class Game extends BasicGame{
 	private Command left = new BasicCommand("left");
 	private Command right = new BasicCommand("right");
 	
-	public Image fundo;
-	
+	public Image bg;
 	private Personagem hero;
+	//private Tiro shot;
+	private ArrayList<Tiro> shots;
 	
 	public Game(String title) {
 		super(title);
@@ -34,14 +38,20 @@ public class Game extends BasicGame{
 
 	@Override
 	public void render(GameContainer container, Graphics g) throws SlickException {
-		//hero.getSprite((int)coordHero.getX(), (int)coordHero.getY()).draw();
+		bg.draw();	
+		for (Tiro shot : shots) 
+		{
+			shot.draw();
+		}
 		hero.draw();
 	}
 
 	@Override
 	public void init(GameContainer container) throws SlickException {
-		fundo = new Image("/images/bg.png");
-		hero = new Personagem(new SpriteSheet("/images/char.png", 48, 48), 0, 0);
+		shots = new ArrayList<Tiro>();
+		bg = new Image("/images/bg.png");
+		hero = new Personagem(new SpriteSheet("/images/char.png", 48, 48), 100, 100);
+		//shot = new Tiro(hero.getPosition(), hero.getDir());
 	}
 
 	@Override
@@ -49,6 +59,12 @@ public class Game extends BasicGame{
 		// 48 
 		Input input = container.getInput();
 		input.enableKeyRepeat();
+		
+		for (Tiro shot : shots) 
+		{
+			shot.moveShot(delta);
+		}
+		
 		if(input.isKeyPressed(Input.KEY_W))
 		{
 			hero.moveUp(delta);
@@ -73,12 +89,14 @@ public class Game extends BasicGame{
 		
 		if(input.isKeyPressed(Input.KEY_LSHIFT))
 		{
-			
+			System.out.println("Especial");
 		}
 		
-		if(input.isKeyPressed(Input.MOUSE_LEFT_BUTTON))
+		if(input.isKeyPressed(Input.KEY_UP))
 		{
-			
+			System.out.println("Atirou");
+			Tiro shot = new Tiro(hero.getPosition(), hero.getDir());
+			shots.add(shot);
 		}
 		
 		
@@ -86,8 +104,8 @@ public class Game extends BasicGame{
 	
 	public static void main(String[] args) throws SlickException {
 		AppGameContainer ap = new AppGameContainer(new Game("Teste"));
-		ap.setDisplayMode(WIDTH, HEIGHT, false);
-		ap.setTargetFrameRate(FPS);
+		ap.setDisplayMode(Window.WIDTH, Window.HEIGHT, false);
+		ap.setTargetFrameRate(Window.FPS);
 		ap.start();
 	}
 
