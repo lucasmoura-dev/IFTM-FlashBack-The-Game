@@ -10,27 +10,15 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
-import org.newdawn.slick.command.BasicCommand;
-import org.newdawn.slick.command.Command;
-
 import br.edu.iftm.controllers.Window;
-import br.edu.iftm.models.Personagem;
-import br.edu.iftm.models.Tiro;
+import br.edu.iftm.models.entities.Character;
+import br.edu.iftm.models.entities.Shot;
 
 public class Game extends BasicGame{
-	
-	private Command attack = new BasicCommand("attack");
-	private Command special = new BasicCommand("special");
-	private Command jump = new BasicCommand("jump");
-	private Command up = new BasicCommand("up");
-	private Command down = new BasicCommand("down");
-	private Command left = new BasicCommand("left");
-	private Command right = new BasicCommand("right");
-	
+
 	public Image bg;
-	private Personagem hero;
-	//private Tiro shot;
-	private ArrayList<Tiro> shots;
+	private Character hero;
+	private ArrayList<Shot> shots;
 	
 	public Game(String title) {
 		super(title);
@@ -39,7 +27,7 @@ public class Game extends BasicGame{
 	@Override
 	public void render(GameContainer container, Graphics g) throws SlickException {
 		bg.draw();	
-		for (Tiro shot : shots) 
+		for (Shot shot : shots) 
 		{
 			shot.draw();
 		}
@@ -48,10 +36,12 @@ public class Game extends BasicGame{
 
 	@Override
 	public void init(GameContainer container) throws SlickException {
-		shots = new ArrayList<Tiro>();
+		shots = new ArrayList<Shot>();
 		bg = new Image("/images/bg.png");
-		hero = new Personagem(new SpriteSheet("/images/char.png", 48, 48), 100, 100);
-		//shot = new Tiro(hero.getPosition(), hero.getDir());
+		hero = new Character(100, 100, new SpriteSheet("/images/char.png", 48, 48));
+		hero.defineLimWidthSprite(10);
+		hero.defineLimHeightSprite(2);
+		
 	}
 
 	@Override
@@ -97,7 +87,7 @@ public class Game extends BasicGame{
 		
 		if(input.isKeyPressed(Input.KEY_UP))
 		{
-			Tiro shot = new Tiro(hero.getPosition(), hero.getDir());
+			Shot shot = new Shot(hero.getPosition(), hero.getDir());
 			shots.add(shot);
 		}
 		
