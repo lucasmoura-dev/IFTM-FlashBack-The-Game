@@ -102,14 +102,6 @@ public class Personagem {
 			position.setY(position.getY() + movY);
 		}
 		
-		/*if(position.getX() + movX >= 0 && position.getX() + movX < Game.WIDTH - widthSprite)
-		{
-			if(position.getY() + movY >= 0 && position.getY() + movY < Game.HEIGHT - heightSprite)
-			{
-				position.setX(position.getX() + movX);
-				position.setY(position.getY() + movY);
-			}
-		}*/
 	}
 	
 	public void jump(int delta)
