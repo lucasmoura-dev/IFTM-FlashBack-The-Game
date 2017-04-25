@@ -14,10 +14,6 @@ import br.edu.iftm.controllers.Window;
 import br.edu.iftm.models.entities.Character;
 import br.edu.iftm.models.entities.LifeBar;
 import br.edu.iftm.models.entities.Shot;
-import br.edu.iftm.models.stacks.DataElement;
-import br.edu.iftm.models.stacks.LifePointElement;
-import br.edu.iftm.models.stacks.Stack;
-import br.edu.iftm.models.stacks.StackLifeBar;
 
 public class Game extends BasicGame{
 
@@ -49,12 +45,12 @@ public class Game extends BasicGame{
 		hero.defineLimWidthSprite(10);
 		hero.defineLimHeightSprite(2);
 		lifebar = new LifeBar();
-		lifebar.removeHp(1);
 	}
 
 	@Override
 	public void update(GameContainer container, int delta) throws SlickException {
-		// 48 
+		System.out.println("HP: " + lifebar.getHp() + "/" + lifebar.getHpMax());
+		
 		Input input = container.getInput();
 		input.enableKeyRepeat();
 		

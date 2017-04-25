@@ -40,9 +40,11 @@ public class LifeBar extends Entity{
 	public void drawBlank()
 	{
 		// Draw the blank image, his height's the size of the HP
-		float pc = getHp() / getHpMax();
-		int height = (int)(blank.getHeight() * pc);
-		blank.draw((int)position.getX()+7, (int)position.getY()+7, blank.getWidth(), height);
+		float pcLife = (float)getHp() / (float)getHpMax();
+		int amountLines = (int)(16 * pcLife);
+		int newHeight = (int)blank.getHeight()-(blank.getHeight() * amountLines / 16);
+		//int height = (int)(blank.getHeight() * (0.9-pc));
+		blank.draw((int)position.getX()+7, (int)position.getY()+7, blank.getWidth(), newHeight);
 	}
 
 	@Override
@@ -71,7 +73,7 @@ public class LifeBar extends Entity{
 		try {
 			stackHp.removeLifePoint(amount);
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.out.println("Morreu");;
 		}
 	}
 }
