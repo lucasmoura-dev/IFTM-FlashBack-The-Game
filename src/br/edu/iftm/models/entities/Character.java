@@ -9,6 +9,7 @@ import br.edu.iftm.controllers.Window;
 public class Character extends Entity{
 	public static final int SPRITE_DOWN = 0, SPRITE_LEFT = 1, SPRITE_RIGHT = 2, SPRITE_UP = 3;
 	private int spriteOffX = 0;
+	private int maxOffsetX = 3;
 	private SpriteSheet ss;
 	private int limWidthSprite, limHeightSprite;
 	
@@ -65,7 +66,7 @@ public class Character extends Entity{
 		if(dir == SPRITE_UP)
 		{
 			spriteOffX++;
-			if(spriteOffX >= 3) spriteOffX = 0;
+			if(spriteOffX >= maxOffsetX) spriteOffX = 0;
 		}
 		else
 		{
@@ -81,7 +82,7 @@ public class Character extends Entity{
 		if(dir == SPRITE_DOWN)
 		{
 			spriteOffX++;
-			if(spriteOffX >= 3) spriteOffX = 0;
+			if(spriteOffX >= maxOffsetX) spriteOffX = 0;
 		}
 		else
 		{
@@ -97,7 +98,7 @@ public class Character extends Entity{
 		if(dir == SPRITE_RIGHT)
 		{
 			spriteOffX++;
-			if(spriteOffX >= 3) spriteOffX = 0;
+			if(spriteOffX >= maxOffsetX) spriteOffX = 0;
 		}
 		else
 		{
@@ -113,7 +114,7 @@ public class Character extends Entity{
 		if(dir == SPRITE_LEFT)
 		{
 			spriteOffX++;
-			if(spriteOffX >= 3) spriteOffX = 0;
+			if(spriteOffX >= maxOffsetX) spriteOffX = 0;
 		}
 		else
 		{
@@ -154,6 +155,10 @@ public class Character extends Entity{
 
 	public void defineLimHeightSprite(int limHeightSprite) {
 		this.limHeightSprite = ss.getSprite(0, 0).getHeight() - limHeightSprite;
+	}
+
+	public void setMaxOffsetX(int maxOffsetX) {
+		this.maxOffsetX = maxOffsetX;
 	}
 	
 	

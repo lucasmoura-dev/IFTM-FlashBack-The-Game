@@ -41,7 +41,8 @@ public class Game extends BasicGame{
 	public void init(GameContainer container) throws SlickException {
 		shots = new ArrayList<Shot>();
 		bg = new Image("/images/bg.png");
-		hero = new Character(100, 100, new SpriteSheet("/images/char.png", 48, 48));
+		//hero = new Character(100, 100, new SpriteSheet("/images/char.png", 48, 48));
+		hero = new Character(100, 100, new SpriteSheet("/images/skeleton.png", 48, 48)); // 144x192
 		hero.defineLimWidthSprite(10);
 		hero.defineLimHeightSprite(2);
 		lifebar = new LifeBar();
@@ -94,7 +95,6 @@ public class Game extends BasicGame{
 			Shot shot = new Shot(hero.getPosition(), hero.getDir());
 			shots.add(shot);
 		}
-		
 		
 	}
 	
