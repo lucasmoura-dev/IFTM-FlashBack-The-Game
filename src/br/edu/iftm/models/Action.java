@@ -1,7 +1,7 @@
 package br.edu.iftm.models;
 
-public class Acao {
-	private Acao prox;
+public class Action {
+	private Action prox;
 	private int tipo;
 	
 	

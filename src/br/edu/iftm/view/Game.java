@@ -12,13 +12,19 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 import br.edu.iftm.controllers.Window;
 import br.edu.iftm.models.entities.Character;
+import br.edu.iftm.models.entities.LifeBar;
 import br.edu.iftm.models.entities.Shot;
+import br.edu.iftm.models.stacks.DataElement;
+import br.edu.iftm.models.stacks.LifePointElement;
+import br.edu.iftm.models.stacks.Stack;
+import br.edu.iftm.models.stacks.StackLifeBar;
 
 public class Game extends BasicGame{
 
 	public Image bg;
 	private Character hero;
 	private ArrayList<Shot> shots;
+	private LifeBar lifebar;
 	
 	public Game(String title) {
 		super(title);
@@ -32,6 +38,7 @@ public class Game extends BasicGame{
 			shot.draw();
 		}
 		hero.draw();
+		lifebar.draw();
 	}
 
 	@Override
@@ -41,7 +48,8 @@ public class Game extends BasicGame{
 		hero = new Character(100, 100, new SpriteSheet("/images/char.png", 48, 48));
 		hero.defineLimWidthSprite(10);
 		hero.defineLimHeightSprite(2);
-		
+		lifebar = new LifeBar();
+		lifebar.removeHp(1);
 	}
 
 	@Override
@@ -96,9 +104,12 @@ public class Game extends BasicGame{
 	
 	public static void main(String[] args) throws SlickException {
 		AppGameContainer ap = new AppGameContainer(new Game("Teste"));
+		ap.setShowFPS(false);
 		ap.setDisplayMode(Window.WIDTH, Window.HEIGHT, false);
 		ap.setTargetFrameRate(Window.FPS);
+		
 		ap.start();
+	
 	}
 
 }
