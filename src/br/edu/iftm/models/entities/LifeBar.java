@@ -68,6 +68,11 @@ public class LifeBar extends Entity{
 		stackHp.addLifePoint(amount);
 	}
 	
+	public boolean isEmpty()
+	{
+		return stackHp.isEmpty();
+	}
+	
 	public void removeHp(int amount)
 	{
 		try {

@@ -1,14 +1,14 @@
 package br.edu.iftm.models.entities;
 
-import java.util.ArrayList;
-
 import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Point;
 
 import br.edu.iftm.controllers.Window;
 
 public class Projectile extends Entity{
-	protected Point origin, position;
+	public static final int TYPE_HERO = 1, TYPE_ENEMY = 2;
+	protected Point origin;
+	protected int shooterType;
 	
 	public Projectile(Point heroPos, Image image, int dir) {
 		super(new Point(heroPos.getX()+20, heroPos.getY()), image, dir);
@@ -20,7 +20,7 @@ public class Projectile extends Entity{
 	}
 
 	@Override
-	boolean move(float movX, float movY, ArrayList<Entity> obstacles) {
+	boolean move(float movX, float movY) {
 		if(Window.isInside(new Point(position.getX() + movX, position.getY() + movY), image.getWidth(), image.getHeight()))
 		{
 			position.setX(position.getX() + movX);
@@ -72,8 +72,16 @@ public class Projectile extends Entity{
 	}
 
 	@Override
-	public void collidedWith(Entity other) {
-		
+	public void collidedWith(Entity other) {}
+
+	public int getShooterType() {
+		return shooterType;
 	}
 
+	public void setShooterType(int shooterType) {
+		this.shooterType = shooterType;
+	}
+
+	
+	
 }

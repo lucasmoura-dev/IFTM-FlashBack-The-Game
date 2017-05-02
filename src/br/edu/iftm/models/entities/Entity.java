@@ -73,6 +73,16 @@ public abstract class Entity {
 		return (int)position.getY();
 	}
 	
+	public void setX(int x)
+	{
+		position.setX((int)x);
+	}
+	
+	public void setY(int y)
+	{
+		position.setY((int)y);
+	}
+	
 	 /**
 	 * Check if this entity collised with another.
 	 *
@@ -101,7 +111,6 @@ public abstract class Entity {
 	public void setImage(Image image) {
 		this.image = image;
 	}
-
 	
 	
 	

@@ -1,10 +1,11 @@
 package br.edu.iftm.models.entities;
 
-import java.util.ArrayList;
 
+import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.geom.Point;
+import org.newdawn.slick.geom.Rectangle;
 
 import br.edu.iftm.controllers.Window;
 import br.edu.iftm.models.stacks.StackLifeBar;
@@ -19,7 +20,6 @@ public class Character extends Entity{
 	public Character(int x, int y, Image image, int dir) {
 		super(new Point(x, y), image, dir);
 		this.dir = dir;
-		speed = 0.5f;
 	}
 	
 
@@ -43,7 +43,7 @@ public class Character extends Entity{
 	
 
 	public void draw()
-	{
+	{		
 		image = ss.getSprite(spriteOffX, dir);
 		image.draw((int)position.getX(), (int)position.getY());
 	}
