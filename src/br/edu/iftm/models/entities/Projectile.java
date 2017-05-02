@@ -1,5 +1,7 @@
 package br.edu.iftm.models.entities;
 
+import java.util.ArrayList;
+
 import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Point;
 
@@ -18,7 +20,7 @@ public class Projectile extends Entity{
 	}
 
 	@Override
-	boolean move(float movX, float movY) {
+	boolean move(float movX, float movY, ArrayList<Entity> obstacles) {
 		if(Window.isInside(new Point(position.getX() + movX, position.getY() + movY), image.getWidth(), image.getHeight()))
 		{
 			position.setX(position.getX() + movX);
@@ -67,6 +69,11 @@ public class Projectile extends Entity{
 				return move(speed * delta, 0);
 		}
 		return false;
+	}
+
+	@Override
+	public void collidedWith(Entity other) {
+		
 	}
 
 }

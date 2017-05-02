@@ -76,4 +76,7 @@ public class LifeBar extends Entity{
 			System.out.println("Morreu");;
 		}
 	}
+
+	@Override
+	public void collidedWith(Entity other) {}
 }

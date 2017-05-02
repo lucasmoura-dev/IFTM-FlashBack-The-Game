@@ -12,6 +12,7 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 import br.edu.iftm.controllers.Window;
 import br.edu.iftm.models.entities.Character;
+import br.edu.iftm.models.entities.Entity;
 import br.edu.iftm.models.entities.LifeBar;
 import br.edu.iftm.models.entities.Shot;
 
@@ -21,9 +22,11 @@ public class Game extends BasicGame{
 	private Character hero;
 	private ArrayList<Shot> shots;
 	private LifeBar lifebar;
+	private ArrayList<Entity> obstacles;
 	
 	public Game(String title) {
 		super(title);
+		obstacles = new ArrayList<Entity>();
 	}
 
 	@Override
@@ -46,6 +49,8 @@ public class Game extends BasicGame{
 		hero.defineLimWidthSprite(10);
 		hero.defineLimHeightSprite(2);
 		lifebar = new LifeBar();
+		obstacles.add(hero);
+		
 	}
 
 	@Override

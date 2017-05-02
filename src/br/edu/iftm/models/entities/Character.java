@@ -1,10 +1,13 @@
 package br.edu.iftm.models.entities;
 
+import java.util.ArrayList;
+
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.geom.Point;
 
 import br.edu.iftm.controllers.Window;
+import br.edu.iftm.models.stacks.StackLifeBar;
 
 public class Character extends Entity{
 	public static final int SPRITE_DOWN = 0, SPRITE_LEFT = 1, SPRITE_RIGHT = 2, SPRITE_UP = 3;
@@ -19,6 +22,7 @@ public class Character extends Entity{
 		speed = 0.5f;
 	}
 	
+
 	public Character(int x, int y, SpriteSheet ss){
 		super(new Point(x, y), 3);
 		this.dir = 3;
@@ -160,7 +164,11 @@ public class Character extends Entity{
 	public void setMaxOffsetX(int maxOffsetX) {
 		this.maxOffsetX = maxOffsetX;
 	}
-	
+
+	@Override
+	public void collidedWith(Entity other){
+		
+	}
 	
 
 }
