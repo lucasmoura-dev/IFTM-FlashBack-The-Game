@@ -10,9 +10,12 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
+import org.newdawn.slick.geom.Point;
+
 import br.edu.iftm.controllers.Window;
 import br.edu.iftm.models.FlashBackSkill;
 import br.edu.iftm.models.entities.Character;
+import br.edu.iftm.models.entities.HistoryBar;
 import br.edu.iftm.models.entities.LifeBar;
 import br.edu.iftm.models.entities.Projectile;
 import br.edu.iftm.models.entities.Shot;
@@ -30,6 +33,7 @@ public class Game extends BasicGame{
 	private FlashBackSkill flashBack;
 	private boolean skillOn;
 	private SpriteSheet ss_hero, ss_hero_skill;
+	private HistoryBar histBar;
 	
 	public Game(String title) {
 		super(title);
@@ -48,6 +52,7 @@ public class Game extends BasicGame{
 		// Retangulos para fisica
 		g.drawRect(hero.getX(), hero.getY(), hero.getImage().getWidth(), hero.getImage().getHeight());
 		
+		histBar.draw();
 	}
 	
 	private void drawInterface()
@@ -88,10 +93,10 @@ public class Game extends BasicGame{
 		hero.defineLimWidthSprite(10);
 		hero.defineLimHeightSprite(1);
 		lifebar = new LifeBar(Stack.TYPE_STATIC);
-		flashBack = new FlashBackSkill(Stack.TYPE_STATIC, hero, lifebar);
+		histBar = new HistoryBar(new Point(Window.WIDTH-35, 0), new Image("images/bar.png"), 0);
+		flashBack = new FlashBackSkill(Stack.TYPE_STATIC, hero, lifebar, histBar);
 		flashBack.addBackup(hero); // Add the hero start position
-		createEnemy();
-		
+		createEnemy();	
 	}
 	
 	@Override
