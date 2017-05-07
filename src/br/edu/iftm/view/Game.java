@@ -11,6 +11,7 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 import br.edu.iftm.controllers.Window;
+import br.edu.iftm.models.FlashBackSkill;
 import br.edu.iftm.models.entities.Character;
 import br.edu.iftm.models.entities.LifeBar;
 import br.edu.iftm.models.entities.Projectile;
@@ -26,6 +27,9 @@ public class Game extends BasicGame{
 	private LifeBar lifebar;
 	private int counter = 0;
 	private Random rand;
+	private FlashBackSkill flashBack;
+	private boolean skillOn;
+	private SpriteSheet ss_hero, ss_hero_skill;
 	
 	public Game(String title) {
 		super(title);
@@ -73,14 +77,18 @@ public class Game extends BasicGame{
 
 	@Override
 	public void init(GameContainer container) throws SlickException {
+		skillOn = false;
 		rand = new Random();
 		shots = new ArrayList<Shot>();
 		enemies = new ArrayList<Character>();
 		bg = new Image("/images/bg.png");
-		hero = new Character(100, 100, new SpriteSheet("/images/char_flashback.png", 48, 48));
+		ss_hero = new SpriteSheet("/images/char.png", 48, 48);
+		ss_hero_skill = new SpriteSheet("/images/char_flashback.png", 48, 48);
+		hero = new Character(100, 100, ss_hero);
 		hero.defineLimWidthSprite(10);
 		hero.defineLimHeightSprite(1);
 		lifebar = new LifeBar(Stack.TYPE_STATIC);
+		flashBack = new FlashBackSkill(Stack.TYPE_STATIC, hero, lifebar);
 		createEnemy();
 		
 	}
@@ -109,31 +117,49 @@ public class Game extends BasicGame{
 			}
 		}
 		
+		detectCollisions();
+		
+		// If the FlashBack's on, disable keys detection
+		if(skillOn)
+		{
+			skillOn = flashBack.restore();
+			if(!skillOn) hero.setSpriteSheet(ss_hero);
+			return;
+		}	
+		
 		if(input.isKeyPressed(Input.KEY_W))
 		{
 			hero.moveUp(delta);
+			flashBack.addBackup(hero);
 		}
 		else if(input.isKeyPressed(Input.KEY_S))
 		{
 			hero.moveDown(delta);
+			flashBack.addBackup(hero);
 		}
 		else if(input.isKeyPressed(Input.KEY_A))
 		{
 			hero.moveLeft(delta);
+			flashBack.addBackup(hero);
 		}
 		else if(input.isKeyPressed(Input.KEY_D))
 		{
 			hero.moveRight(delta);
+			flashBack.addBackup(hero);
 		}
 		
 		if(input.isKeyPressed(Input.KEY_SPACE))
 		{
 			hero.jump(delta);
+			flashBack.addBackup(hero);
 		}
 		
 		if(input.isKeyPressed(Input.KEY_LSHIFT))
 		{
 			System.out.println("Especial");
+			flashBack.use(200);
+			hero.setSpriteSheet(ss_hero_skill);
+			skillOn = true;
 		}
 		
 		if(input.isKeyPressed(Input.KEY_UP))
@@ -155,7 +181,7 @@ public class Game extends BasicGame{
 			}
 		}
 		
-		detectCollisions();
+		System.out.println("HP: " + lifebar.getHp() + "/" + lifebar.getHpMax());
 	}
 	
 	private void createEnemy() throws SlickException
@@ -191,6 +217,7 @@ public class Game extends BasicGame{
 				if(shots.get(i).collidesWith(hero))
 				{
 					lifebar.removeHp(1);
+					flashBack.addBackup(lifebar.getHp());
 					shots.remove(i--);
 				}
 			}

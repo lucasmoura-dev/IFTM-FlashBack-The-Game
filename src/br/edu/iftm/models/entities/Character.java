@@ -164,6 +164,26 @@ public class Character extends Entity{
 	public void collidedWith(Entity other){
 		
 	}
-	
 
+
+	public int getSpriteOffX() {
+		return spriteOffX;
+	}
+
+
+	public void setSpriteOffX(int spriteOffX) {
+		this.spriteOffX = spriteOffX;
+	}
+
+
+	public SpriteSheet getSpriteSheet() {
+		return ss;
+	}
+
+
+	public void setSpriteSheet(SpriteSheet ss) {
+		this.ss = ss;
+	}
+	
+	
 }

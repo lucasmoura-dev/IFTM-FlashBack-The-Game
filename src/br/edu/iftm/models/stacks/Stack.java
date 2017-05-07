@@ -101,6 +101,18 @@ public class Stack {
 			return peekStaticStack();
 	}
 	
+	public void clear()
+	{
+		for(int i=0; i < size; i++)
+		{
+			try {
+				pop();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
 	public boolean isFull()
 	{
 		return size == sizeMax;

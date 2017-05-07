@@ -1,15 +1,15 @@
 package br.edu.iftm.models.stacks;
 
 public class StackLifeBar extends Stack {
-	private static final int lpUnit = 10;
+	public static final int LP_UNIT = 10;
 	
 	public StackLifeBar(int stackType, int hpMax) {
-		super(stackType, hpMax / lpUnit);
+		super(stackType, hpMax / LP_UNIT);
 	}
 	
 	public StackLifeBar(int stackType, LifePointElement lastElement, int hpMax) // Action, LifePoint
 	{
-		super(stackType, lastElement, hpMax / lpUnit);
+		super(stackType, lastElement, hpMax / LP_UNIT);
 	}
 	
 	public StackLifeBar(int stackType, int hpMax, boolean fillHp) // Action, LifePoint
@@ -21,7 +21,7 @@ public class StackLifeBar extends Stack {
 	
 	public void fillHp()
 	{
-		addLifePoint(sizeMax/* / lpUnit*/);
+		addLifePoint(sizeMax);
 	}
 	
 	public void addLifePoint(int amount)
@@ -46,15 +46,15 @@ public class StackLifeBar extends Stack {
 	}
 
 	public int getHpMax() {
-		return sizeMax * lpUnit;
+		return sizeMax * LP_UNIT;
 	}
 
 	public void setHpMax(int hpMax) {
-		sizeMax = hpMax / lpUnit;
+		sizeMax = hpMax / LP_UNIT;
 	}
 
 	public int getHp() {
-		return getSize() * lpUnit;
+		return getSize() * LP_UNIT;
 	}
 
 }

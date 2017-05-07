@@ -1,20 +1,18 @@
-package br.edu.iftm.models.stacks;
+package br.edu.iftm.models.stacks.flashback;
 
-import org.newdawn.slick.Image;
-
-import br.edu.iftm.models.entities.Entity;
+import br.edu.iftm.models.stacks.DataElement;
 
 public class ActionElement extends DataElement{
 	public static final int TYPE_HERO_MOVS = 0, TYPE_HERO_HP = 1;
 	private int type;
-	private Entity entity; // salva a pos, dir, image, speed
+	private CharacterBackup charBackup; // salva a pos, dir, image, speed
 	private int hp; // salva o hp
 	// movimento heroi
 	// barra de vida
 	
-	public ActionElement(Entity hero)
+	public ActionElement(CharacterBackup hero)
 	{
-		this.entity = hero;
+		this.charBackup = hero;
 		type = TYPE_HERO_MOVS;
 	}
 	
@@ -24,7 +22,7 @@ public class ActionElement extends DataElement{
 		type = TYPE_HERO_HP;
 	}
 	
-	public int getHP() throws Exception
+	public int getHp() throws Exception
 	{
 		if(type != TYPE_HERO_HP)
 			throw new Exception("The action element isn't the type TYPE_HERO_HP");
@@ -35,41 +33,59 @@ public class ActionElement extends DataElement{
 	{
 		if(type != TYPE_HERO_MOVS)
 			throw new Exception("The action element isn't the type TYPE_HERO_MOVS");
-		return entity.getDir();
+		return charBackup.getDir();
 	}
 	
 	public int getX() throws Exception
 	{
 		if(type != TYPE_HERO_MOVS)
 			throw new Exception("The action element isn't the type TYPE_HERO_MOVS");
-		return entity.getX();
+		return charBackup.getX();
 	}
 	
 	public int getY() throws Exception
 	{
 		if(type != TYPE_HERO_MOVS)
 			throw new Exception("The action element isn't the type TYPE_HERO_MOVS");
-		return entity.getY();
+		return charBackup.getY();
 	}
 	
 	public float getSpeed() throws Exception
 	{
 		if(type != TYPE_HERO_MOVS)
 			throw new Exception("The action element isn't the type TYPE_HERO_MOVS");
-		return entity.getSpeed();
+		return charBackup.getSpeed();
 	}
 	
-	public Image getImage() throws Exception
-	{
+	public int getSpriteOffX() throws Exception {
 		if(type != TYPE_HERO_MOVS)
 			throw new Exception("The action element isn't the type TYPE_HERO_MOVS");
-		return entity.getImage();
+		return charBackup.getSpriteOffX();
+	}
+
+	public int getType() {
+		return type;
+	}
+
+	public void setType(int type) {
+		this.type = type;
 	}
 	
-	public Entity getEntity() throws Exception
+	public boolean isCharBackup()
 	{
-		if(type != TYPE_HERO_MOVS)
-			throw new Exception("The action element isn't the type TYPE_HERO_MOVS");
-		return entity;
+		return type == TYPE_HERO_MOVS;
+	}
+	
+	public boolean isHpBackup()
+	{
+		return type == TYPE_HERO_HP;
+	}
+	
+	public String toString()
+	{
+		if(isCharBackup())
+			return charBackup.toString();
+		else
+			return "hp = " + hp;
 	}
 }
