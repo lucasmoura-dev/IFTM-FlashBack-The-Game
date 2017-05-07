@@ -84,11 +84,12 @@ public class Game extends BasicGame{
 		bg = new Image("/images/bg.png");
 		ss_hero = new SpriteSheet("/images/char.png", 48, 48);
 		ss_hero_skill = new SpriteSheet("/images/char_flashback.png", 48, 48);
-		hero = new Character(100, 100, ss_hero);
+		hero = new Character(100, 100, ss_hero, Character.SPRITE_DOWN);
 		hero.defineLimWidthSprite(10);
 		hero.defineLimHeightSprite(1);
 		lifebar = new LifeBar(Stack.TYPE_STATIC);
 		flashBack = new FlashBackSkill(Stack.TYPE_STATIC, hero, lifebar);
+		flashBack.addBackup(hero); // Add the hero start position
 		createEnemy();
 		
 	}
@@ -157,7 +158,7 @@ public class Game extends BasicGame{
 		if(input.isKeyPressed(Input.KEY_LSHIFT))
 		{
 			System.out.println("Especial");
-			flashBack.use(200);
+			flashBack.use();
 			hero.setSpriteSheet(ss_hero_skill);
 			skillOn = true;
 		}
@@ -181,7 +182,7 @@ public class Game extends BasicGame{
 			}
 		}
 		
-		System.out.println("HP: " + lifebar.getHp() + "/" + lifebar.getHpMax());
+		//System.out.println("HP: " + lifebar.getHp() + "/" + lifebar.getHpMax());
 	}
 	
 	private void createEnemy() throws SlickException

@@ -103,7 +103,7 @@ public class Stack {
 	
 	public void clear()
 	{
-		for(int i=0; i < size; i++)
+		while(!isEmpty())
 		{
 			try {
 				pop();
@@ -137,4 +137,14 @@ public class Stack {
 	{
 		return stackType == TYPE_STATIC;
 	}
+
+	public int getSizeMax() {
+		return sizeMax;
+	}
+
+	public void setSizeMax(int sizeMax) {
+		this.sizeMax = sizeMax;
+	}
+	
+	
 }

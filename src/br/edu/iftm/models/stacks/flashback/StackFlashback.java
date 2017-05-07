@@ -6,12 +6,12 @@ import br.edu.iftm.models.stacks.Stack;
 
 public class StackFlashback extends Stack{
 	
-	public StackFlashback(int stackType) {
-		super(stackType, 200);
+	public StackFlashback(int stackType, int size) {
+		super(stackType, size);
 	}
 	
-	public StackFlashback(int stackType, ActionElement actionElement) {
-		super(stackType, actionElement, 200);
+	public StackFlashback(int stackType, ActionElement actionElement, int size) {
+		super(stackType, actionElement, size);
 	}
 	
 	public void addCharBackup(int hp)

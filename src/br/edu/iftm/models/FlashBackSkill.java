@@ -9,56 +9,105 @@ import br.edu.iftm.models.stacks.flashback.ActionElement;
 import br.edu.iftm.models.stacks.flashback.StackFlashback;
 
 public class FlashBackSkill {
-	private StackFlashback stack1, stack2;
+	private StackFlashback[] stacks;
 	private Character hero;
 	private LifeBar lifebar;
-	private int cont = 0, contMax = 200;
-	private int maxActionsReturn;
-	
+	private int contActions, maxActionsReturn;
+	private int stackActive, otherStack;
+
 	public FlashBackSkill(int stackType, Character hero, LifeBar lifebar)
 	{
-		stack1 = new StackFlashback(stackType);
-		stack2 = new StackFlashback(stackType);
+		stacks = new StackFlashback[2];
+		stacks[0] = new StackFlashback(stackType, 50);
+		stacks[1] = new StackFlashback(stackType, 50);
 		this.hero = hero;
 		this.lifebar = lifebar;
+		contActions = 0;
+		stackActive = 0;
+		otherStack = 1;
+		maxActionsReturn = 50;
+	}
+	
+	private void swapStackActive()
+	{
+		if(stackActive == 0)
+		{
+			stackActive = 1;
+			otherStack = 0;
+		}
+		else
+		{
+			stackActive = 0;
+			otherStack = 1;
+		}
+	}
+	
+	private void clearOrChangeStacks()
+	{
+		System.out.println("Stack #" + (stackActive+1) + " " + stacks[stackActive].getSize() + "/" + stacks[stackActive].getSizeMax() + "; maxActionsReturn = " + maxActionsReturn);
+		
+		if(stacks[stackActive].getSize() >= maxActionsReturn && !stacks[otherStack].isEmpty())
+			stacks[otherStack].clear();
+		
+		if(stacks[stackActive].isFull())
+			swapStackActive();
 	}
 	
 	public void addBackup(int hp)
 	{
-		stack1.addCharBackup(hp);
+		stacks[stackActive].addCharBackup(hp);
+		clearOrChangeStacks();	
 	}
 	
 	public void addBackup(Character character)
 	{
-		stack1.addCharBackup(character.getSpriteOffX(), character.getDir(), new Point(character.getX(), character.getY()), character.getSpeed());
+		stacks[stackActive].addCharBackup(character.getSpriteOffX(), character.getDir(), new Point(character.getX(), character.getY()), character.getSpeed());
+		clearOrChangeStacks();
 	}
 	
-	public void use(int contMax)
+	public void use()
 	{
-		cont = 0;
-		this.contMax = contMax;
-		
-		restore();
+		contActions = 0;
 	}
 	
 	public boolean restore()
 	{
-		if(cont >= contMax || stack1.isEmpty())
-			return false;
+		if(contActions >= maxActionsReturn) return false;
 		
-		try {
-			ActionElement actionElement = (ActionElement) stack1.pop();
-			System.out.println("[sizeStack="+stack1.getSize()+"]" + actionElement);
-			if(actionElement.isCharBackup())
-				restoreChar(actionElement);
-			else
-				restoreHp(actionElement);
-			cont++;
-			return true;
-		} catch (Exception e) {
-			e.printStackTrace();
-			return false;
+		ActionElement actionElement;
+		
+		if(stacks[stackActive].isEmpty())
+		{
+			if(stacks[otherStack].isEmpty())
+				return false;
+			try {
+				System.out.println("POP Stack #" + (otherStack+1) + " " + stacks[otherStack].getSize() + "/" + stacks[otherStack].getSizeMax() + "; maxActionsReturn = " + maxActionsReturn);
+				actionElement = (ActionElement) stacks[otherStack].pop();
+				swapStackActive(); // Stack Active is empty, but the other stack have a free slot
+			} catch (Exception e) {
+				e.printStackTrace();
+				return false;
+			}
 		}
+		else
+		{
+			try {
+				System.out.println("POP Stack #" + (stackActive+1) + " " + stacks[stackActive].getSize() + "/" + stacks[stackActive].getSizeMax() + "; maxActionsReturn = " + maxActionsReturn);
+				actionElement = (ActionElement) stacks[stackActive].pop();
+			} catch (Exception e) {
+				e.printStackTrace();
+				return false;
+			}
+			
+		}
+		
+		//System.out.println("[sizeStack="+stacks[stackActive].getSize()+"]" + actionElement);
+		if(actionElement.isCharBackup())
+			restoreChar(actionElement);
+		else
+			restoreHp(actionElement);
+		contActions++;
+		return true;
 	}
 	
 	private void restoreChar(ActionElement actionElement)
