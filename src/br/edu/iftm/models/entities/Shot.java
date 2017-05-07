@@ -4,8 +4,6 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Point;
 
-import br.edu.iftm.controllers.Window;
-
 public class Shot extends Projectile{
 	
 	public Shot(Point heroPos, int dir, Image image) throws SlickException {

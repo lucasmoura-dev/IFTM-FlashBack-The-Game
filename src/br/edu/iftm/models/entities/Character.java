@@ -1,14 +1,9 @@
 package br.edu.iftm.models.entities;
 
-
-import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.geom.Point;
-import org.newdawn.slick.geom.Rectangle;
-
 import br.edu.iftm.controllers.Window;
-import br.edu.iftm.models.stacks.StackLifeBar;
 
 public class Character extends Entity{
 	public static final int SPRITE_DOWN = 0, SPRITE_LEFT = 1, SPRITE_RIGHT = 2, SPRITE_UP = 3;

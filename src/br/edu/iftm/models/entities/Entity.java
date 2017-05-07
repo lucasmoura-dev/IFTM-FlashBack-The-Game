@@ -1,7 +1,5 @@
 package br.edu.iftm.models.entities;
 
-import java.util.ArrayList;
-
 import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Point;
 import org.newdawn.slick.geom.Rectangle;

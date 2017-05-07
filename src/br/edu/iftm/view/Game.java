@@ -2,8 +2,6 @@ package br.edu.iftm.view;
 
 import java.util.ArrayList;
 import java.util.Random;
-
-import org.lwjgl.opengl.HPOcclusionTest;
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.BasicGame;
 import org.newdawn.slick.GameContainer;
@@ -14,10 +12,10 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 import br.edu.iftm.controllers.Window;
 import br.edu.iftm.models.entities.Character;
-import br.edu.iftm.models.entities.Entity;
 import br.edu.iftm.models.entities.LifeBar;
 import br.edu.iftm.models.entities.Projectile;
 import br.edu.iftm.models.entities.Shot;
+import br.edu.iftm.models.stacks.Stack;
 
 public class Game extends BasicGame{
 
@@ -26,7 +24,6 @@ public class Game extends BasicGame{
 	private ArrayList<Shot> shots;
 	private ArrayList<Character> enemies;
 	private LifeBar lifebar;
-	private Character enemy;
 	private int counter = 0;
 	private Random rand;
 	
@@ -44,7 +41,7 @@ public class Game extends BasicGame{
 		drawEnemies(g);
 		drawInterface();
 		
-		// Retângulos para física
+		// Retangulos para fisica
 		g.drawRect(hero.getX(), hero.getY(), hero.getImage().getWidth(), hero.getImage().getHeight());
 		
 	}
@@ -83,7 +80,7 @@ public class Game extends BasicGame{
 		hero = new Character(100, 100, new SpriteSheet("/images/char_flashback.png", 48, 48));
 		hero.defineLimWidthSprite(10);
 		hero.defineLimHeightSprite(1);
-		lifebar = new LifeBar();
+		lifebar = new LifeBar(Stack.TYPE_STATIC);
 		createEnemy();
 		
 	}
@@ -205,9 +202,7 @@ public class Game extends BasicGame{
 		ap.setShowFPS(false);
 		ap.setDisplayMode(Window.WIDTH, Window.HEIGHT, false);
 		ap.setTargetFrameRate(Window.FPS);
-		
 		ap.start();
-	
 	}
 
 }

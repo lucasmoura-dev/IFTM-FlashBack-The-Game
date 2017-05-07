@@ -1,39 +1,39 @@
 package br.edu.iftm.models.stacks;
 
 public class StackLifeBar extends Stack {
-	private int hpMax;
-	private final int lpUnit = 10;
+	private static final int lpUnit = 10;
 	
 	public StackLifeBar(int stackType, int hpMax) {
-		super(stackType);
-		this.hpMax = hpMax;
+		super(stackType, hpMax / lpUnit);
 	}
 	
 	public StackLifeBar(int stackType, LifePointElement lastElement, int hpMax) // Action, LifePoint
 	{
-		super(stackType, lastElement);
-		this.hpMax = hpMax;
+		super(stackType, lastElement, hpMax / lpUnit);
 	}
 	
 	public StackLifeBar(int stackType, int hpMax, boolean fillHp) // Action, LifePoint
 	{
 		this(stackType, hpMax);
-		this.hpMax = hpMax;
 		if(fillHp)
 			fillHp();
 	}
 	
 	public void fillHp()
 	{
-		addLifePoint(hpMax / lpUnit);
+		addLifePoint(sizeMax/* / lpUnit*/);
 	}
 	
 	public void addLifePoint(int amount)
 	{
-		for(int i=0; i < amount && !isFullHp(); i++)
+		for(int i=0; i < amount && !isFull(); i++)
 		{
 			LifePointElement newLP = new LifePointElement();
-			push(newLP);
+			try {
+				push(newLP);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 	}
 	
@@ -44,23 +44,17 @@ public class StackLifeBar extends Stack {
 			pop();
 		}
 	}
-	
-	
-	public boolean isFullHp()
-	{
-		return (getHp() == hpMax);
-	}
 
 	public int getHpMax() {
-		return hpMax;
+		return sizeMax * lpUnit;
 	}
 
 	public void setHpMax(int hpMax) {
-		this.hpMax = hpMax;
+		sizeMax = hpMax / lpUnit;
 	}
 
 	public int getHp() {
-		return getSize() * 10;
+		return getSize() * lpUnit;
 	}
 
 }

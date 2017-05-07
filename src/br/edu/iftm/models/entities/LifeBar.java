@@ -3,8 +3,6 @@ package br.edu.iftm.models.entities;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Point;
-
-import br.edu.iftm.models.stacks.Stack;
 import br.edu.iftm.models.stacks.StackLifeBar;
 
 public class LifeBar extends Entity{
@@ -12,7 +10,7 @@ public class LifeBar extends Entity{
 	private StackLifeBar stackHp;
 	private Point position;
 	
-	public LifeBar(Point position, Image image, int dir)
+	public LifeBar(Point position, Image image, int dir, int stackType)
 	{
 		super(position, image, dir);
 		try {
@@ -20,13 +18,13 @@ public class LifeBar extends Entity{
 		} catch (SlickException e) {
 			e.printStackTrace();
 		} 
-		stackHp = new StackLifeBar(Stack.TYPE_DYNAMIC, 160, true);
+		stackHp = new StackLifeBar(stackType, 160, true);
 		this.position = position;
 	}
 	
-	public LifeBar() throws SlickException
+	public LifeBar(int stackType) throws SlickException
 	{
-		this(new Point(10, 10), new Image("/images/bar_full.png"), 0);
+		this(new Point(10, 10), new Image("/images/bar_full.png"), 0, stackType);
 	}
 
 	
@@ -43,7 +41,6 @@ public class LifeBar extends Entity{
 		float pcLife = (float)getHp() / (float)getHpMax();
 		int amountLines = (int)(16 * pcLife);
 		int newHeight = (int)blank.getHeight()-(blank.getHeight() * amountLines / 16);
-		//int height = (int)(blank.getHeight() * (0.9-pc));
 		blank.draw((int)position.getX()+7, (int)position.getY()+7, blank.getWidth(), newHeight);
 	}
 
