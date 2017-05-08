@@ -16,6 +16,7 @@ import br.edu.iftm.controllers.FlashBackSkill;
 import br.edu.iftm.controllers.Window;
 import br.edu.iftm.models.entities.Character;
 import br.edu.iftm.models.entities.HistoryBar;
+import br.edu.iftm.models.entities.KeysBars;
 import br.edu.iftm.models.entities.LifeBar;
 import br.edu.iftm.models.entities.Projectile;
 import br.edu.iftm.models.entities.Shot;
@@ -28,12 +29,14 @@ public class Game extends BasicGame{
 	private ArrayList<Shot> shots;
 	private ArrayList<Character> enemies;
 	private LifeBar lifebar;
-	private int counter = 0;
+	private int timerShots = 0, timerMonstersRespawn = 0, timerSkillCd;
 	private Random rand;
 	private FlashBackSkill flashBack;
 	private boolean skillOn;
 	private SpriteSheet ss_hero, ss_hero_skill;
 	private HistoryBar histBar;
+	private static final int SKILL_COLDOWN = 5000;
+	private KeysBars keysBar;
 	
 	public Game(String title) {
 		super(title);
@@ -53,7 +56,9 @@ public class Game extends BasicGame{
 		// Retangulos para fisica
 		g.drawRect(hero.getX(), hero.getY(), hero.getImage().getWidth(), hero.getImage().getHeight());
 		
+		keysBar.draw();
 		histBar.draw();
+		
 	}
 	
 	private void drawInterface()
@@ -84,6 +89,7 @@ public class Game extends BasicGame{
 	@Override
 	public void init(GameContainer container) throws SlickException {
 		skillOn = false;
+		timerSkillCd = SKILL_COLDOWN;
 		rand = new Random();
 		shots = new ArrayList<Shot>();
 		enemies = new ArrayList<Character>();
@@ -97,21 +103,22 @@ public class Game extends BasicGame{
 		histBar = new HistoryBar(new Point(Window.WIDTH-35, 0), new Image("images/bar.png"), 0);
 		flashBack = new FlashBackSkill(Stack.TYPE_STATIC, hero, lifebar, histBar);
 		flashBack.addBackup(hero); // Add the hero start position
+		keysBar = new KeysBars();
 		createEnemy();	
 	}
 	
 	@Override
 	public void update(GameContainer container, int delta) throws SlickException {
-		//System.out.println("HP: " + lifebar.getHp() + "/" + lifebar.getHpMax());
-		
 		if(lifebar.isEmpty())
 		{
 			// Game Over
 			container.exit();
 		}
 		
-		counter += delta;
-		
+		timerShots += delta;
+		timerMonstersRespawn += delta;
+		if(timerSkillCd <= SKILL_COLDOWN)
+			timerSkillCd += delta;
 		
 		Input input = container.getInput();
 		input.enableKeyRepeat();
@@ -124,13 +131,34 @@ public class Game extends BasicGame{
 			}
 		}
 		
-		detectCollisions();
+		detectProjectilesCollisions();
+		
+		
+		if(timerShots >= 1000)
+			createShotsForMonsters();
+		
+		if(timerMonstersRespawn >= 3000)
+		{
+			createEnemy();
+			timerMonstersRespawn = 0;
+		}
+		
+		if(timerSkillCd >= SKILL_COLDOWN)
+		{
+			lifebar.enableSkillIcon();
+			//timerSkillCd = 0;
+		}
 		
 		// If the FlashBack's on, disable keys detection
 		if(skillOn)
 		{
 			skillOn = flashBack.restore();
-			if(!skillOn) hero.setSpriteSheet(ss_hero);
+			if(!skillOn)
+			{
+				hero.setSpriteSheet(ss_hero);
+				lifebar.disableSkillIcon();
+				timerSkillCd = 0;
+			}
 			return;
 		}	
 		
@@ -155,13 +183,7 @@ public class Game extends BasicGame{
 			flashBack.addBackup(hero);
 		}
 		
-		if(input.isKeyPressed(Input.KEY_SPACE))
-		{
-			hero.jump(delta);
-			flashBack.addBackup(hero);
-		}
-		
-		if(input.isKeyPressed(Input.KEY_LSHIFT))
+		if(input.isKeyPressed(Input.KEY_SPACE) && timerSkillCd >= SKILL_COLDOWN)
 		{
 			System.out.println("Especial");
 			flashBack.clearOldHeroes();
@@ -176,20 +198,24 @@ public class Game extends BasicGame{
 			shot.setShooterType(Projectile.TYPE_HERO);
 			shots.add(shot);
 		}
-		
+	}
+	
+	private void createShotsForMonsters()
+	{
 		for(int i=0; i < enemies.size(); i++)
 		{
-			if(counter >= 1000)
-			{
-				Shot shot = new Shot(enemies.get(i).getPosition(), enemies.get(i).getDir(), new Image("/images/shot2.png"));
+			Shot shot;
+			try {
+				shot = new Shot(enemies.get(i).getPosition(), enemies.get(i).getDir(), new Image("/images/shot2.png"));
 				shot.setShooterType(Projectile.TYPE_ENEMY);
 				shot.setSpeed(0.5f);
 				shots.add(shot);
-				counter = 0;
-			}
+			} catch (SlickException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}			
 		}
-		
-		//System.out.println("HP: " + lifebar.getHp() + "/" + lifebar.getHpMax());
+		timerShots = 0;
 	}
 	
 	private void createEnemy() throws SlickException
@@ -205,18 +231,21 @@ public class Game extends BasicGame{
 		enemies.add(enemy);
 	}
 	
-	private void detectCollisions()
+	private void detectProjectilesCollisions()
 	{
 		for(int i=0; i < shots.size(); i++)
 		{
 			if(shots.get(i).getShooterType() == Projectile.TYPE_HERO)
 			{
-				for(int j=0; j < enemies.size(); j++)
+				for(int j=0; j < enemies.size() && !shots.isEmpty(); j++)
 				{
+					System.out.println("i = " +i + "; j = " + j + " shots.size = " + shots.size() + " enemies.size = " + enemies.size());
 					if(shots.get(i).collidesWith(enemies.get(j)))
 					{
 						enemies.remove(j--);
 						shots.remove(i--);
+						if(i < 0)
+							i = 0;
 					}
 				}
 			}
@@ -224,6 +253,8 @@ public class Game extends BasicGame{
 			{
 				if(shots.get(i).collidesWith(hero))
 				{
+					if(skillOn) // The hero with the active skill becomes invulnerable
+						return;
 					lifebar.removeHp(1);
 					flashBack.addBackup(lifebar.getHp());
 					shots.remove(i--);

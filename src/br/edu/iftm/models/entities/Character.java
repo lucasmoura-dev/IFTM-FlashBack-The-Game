@@ -123,24 +123,6 @@ public class Character extends Entity{
 		move(-speed * delta, 0);
 	}
 	
-	public void jump(int delta)
-	{
-		switch(dir)
-		{
-			case SPRITE_UP:
-				move(0, 10 * -speed * delta);
-				break;
-			case SPRITE_DOWN:
-				move(0, 10 * speed * delta);
-				break;
-			case SPRITE_LEFT:
-				move(10 * -speed * delta, 0);
-				break;
-			case SPRITE_RIGHT:
-				move(10 * speed * delta, 0);
-				break;
-		}
-	}
 
 	public int getLimWidthSprite() {
 		return limWidthSprite;

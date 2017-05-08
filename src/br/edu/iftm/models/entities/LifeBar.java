@@ -9,6 +9,8 @@ public class LifeBar extends Entity{
 	private Image blank;
 	private StackLifeBar stackHp;
 	private Point position;
+	private boolean skillEnabled = true;
+	private Image barFullSkillOn, barFullSkillOff;
 	
 	public LifeBar(Point position, Image image, int dir, int stackType)
 	{
@@ -25,8 +27,27 @@ public class LifeBar extends Entity{
 	public LifeBar(int stackType) throws SlickException
 	{
 		this(new Point(10, 10), new Image("/images/bar_full.png"), 0, stackType);
+		barFullSkillOn = new Image("/images/bar_full.png");
+		barFullSkillOff = new Image("/images/bar_full_no_special.png");
 	}
-
+	
+	public void enableSkillIcon()
+	{
+		if(!skillEnabled)
+		{
+			skillEnabled = true;
+			image = barFullSkillOn;
+		}
+	}
+	
+	public void disableSkillIcon()
+	{
+		if(skillEnabled)
+		{
+			skillEnabled = false;
+			image = barFullSkillOff;
+		}
+	}
 	
 	public void draw()
 	{
