@@ -1,5 +1,9 @@
 package br.edu.iftm.models.stacks;
 
+/**
+ * Elemento do tipo ponto de vida que e utilizado na pilha de barra de vida.
+ *
+ */
 public class LifePointElement extends DataElement{
 	// Valor que representa o elemento na pilha. Ex: 1 de hp
 	private int value;

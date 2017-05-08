@@ -2,6 +2,10 @@ package br.edu.iftm.controllers;
 
 import org.newdawn.slick.geom.Point;
 
+/**
+ * Contem as informacoes da resolucao da tela e do FPS. Tambem possui a funcao estatica que verifica se um ponto esta dentro dos limites da tela.
+ *
+ */
 public class Window {
 	public static final int WIDTH = 800;
 	public static final int HEIGHT = 600;

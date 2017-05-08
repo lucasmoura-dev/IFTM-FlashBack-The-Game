@@ -6,8 +6,7 @@ import org.newdawn.slick.geom.Point;
 import br.edu.iftm.controllers.Window;
 
 /**
- * Cria um projetil
- *
+ * Cria uma entidade do tipo projetil.
  */
 public class Projectile extends Entity{
 	public static final int TYPE_HERO = 1, TYPE_ENEMY = 2;

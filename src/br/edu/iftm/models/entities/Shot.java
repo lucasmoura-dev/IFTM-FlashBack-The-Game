@@ -4,6 +4,9 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Point;
 
+/**
+ * Cria um projetil do tipo Shot.
+ */
 public class Shot extends Projectile{
 	
 	/**

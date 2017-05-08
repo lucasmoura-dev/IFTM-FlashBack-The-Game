@@ -1,5 +1,9 @@
 package br.edu.iftm.models.stacks;
 
+/**
+ * Classe que representa uma pilha, podendo ser estatica(usando vetor) ou dinamica(que faz o uso de referencia de elementos).
+ * Na pilha dinamica, ela aponta para o elemento do topo, e cada elemento aponta ou nao para o elemento anterior (de baixo).
+ */
 public class Stack {
 	// Na pilha dinâmica, contém um elemento que aponta para o elemento do topo da pilha
 	protected DataElement lastElement;

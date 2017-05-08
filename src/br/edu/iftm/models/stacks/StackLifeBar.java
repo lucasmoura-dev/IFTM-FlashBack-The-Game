@@ -1,5 +1,9 @@
 package br.edu.iftm.models.stacks;
 
+/**
+ * Representa a pilha da barra de vida.
+ *
+ */
 public class StackLifeBar extends Stack {
 	// Representa quanto de vida cada elemento da pilha representa. Ex: 1 traço na pilha de vida representa
 	// 10 de vida no HP, ou seja, 160HP / 10 = 16 traços.

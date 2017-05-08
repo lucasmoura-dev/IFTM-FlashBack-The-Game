@@ -22,6 +22,7 @@ import br.edu.iftm.models.entities.Projectile;
 import br.edu.iftm.models.entities.Shot;
 import br.edu.iftm.models.stacks.Stack;
 
+
 public class Game extends BasicGame{
 
 	public Image bg;

@@ -1,6 +1,5 @@
 package br.edu.iftm.models.entities;
 
-import org.newdawn.slick.Image;
 import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.geom.Point;
 import br.edu.iftm.controllers.Window;

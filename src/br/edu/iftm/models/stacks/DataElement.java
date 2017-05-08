@@ -1,5 +1,8 @@
 package br.edu.iftm.models.stacks;
 
+/**
+ * Classe abstrata que representa um elemento na pilha.
+ */
 public abstract class DataElement {
 	// O elemento atual aponta para o elemento anterior (de baixo)
 	private DataElement previousElement;
