@@ -7,6 +7,14 @@ public class Window {
 	public static final int HEIGHT = 600;
 	public static final int FPS = 59;
 	
+	
+	/** Verifica se um objeto com a sua possível posição, não está chegando
+	 * nos limites da tela.
+	 * @param position Posição a ser testada
+	 * @param widthObj Largura da iamgem
+	 * @param heightObj Altura da imagem
+	 * @return True - caso a poisção testada não ultrapasse os limites da tela; False - caso a posição testada ultrapasse os limites da tela
+	 */
 	public static boolean isInside(Point position, int widthObj, int heightObj)
 	{
 		if(position.getX() >= 0 && position.getX() < WIDTH - widthObj)

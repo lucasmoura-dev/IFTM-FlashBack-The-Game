@@ -19,6 +19,13 @@ public class FlashBackSkill {
 	private int contActions, maxActionsReturn;
 	private int stackActive, otherStack;
 
+	/**
+	 * 
+	 * @param stackType
+	 * @param hero
+	 * @param lifebar
+	 * @param histBar
+	 */
 	public FlashBackSkill(int stackType, Character hero, LifeBar lifebar, HistoryBar histBar)
 	{
 		oldHeroes = new ArrayList<Character>();
