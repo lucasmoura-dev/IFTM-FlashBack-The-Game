@@ -42,7 +42,6 @@ public class Character extends Entity{
 		image = ss.getSprite(spriteOffX, dir);
 		image.draw((int)position.getX(), (int)position.getY());
 	}
-	
 
 	@Override
 	boolean move(float movX, float movY)

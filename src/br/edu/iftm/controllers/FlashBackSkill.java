@@ -1,5 +1,6 @@
-package br.edu.iftm.models;
+package br.edu.iftm.controllers;
 
+import java.util.ArrayList;
 import org.newdawn.slick.geom.Point;
 
 import br.edu.iftm.models.entities.Character;
@@ -10,6 +11,7 @@ import br.edu.iftm.models.stacks.flashback.ActionElement;
 import br.edu.iftm.models.stacks.flashback.StackFlashback;
 
 public class FlashBackSkill {
+	private ArrayList<Character> oldHeroes;
 	private StackFlashback[] stacks;
 	private Character hero;
 	private LifeBar lifebar;
@@ -19,6 +21,7 @@ public class FlashBackSkill {
 
 	public FlashBackSkill(int stackType, Character hero, LifeBar lifebar, HistoryBar histBar)
 	{
+		oldHeroes = new ArrayList<Character>();
 		stacks = new StackFlashback[2];
 		stacks[0] = new StackFlashback(stackType, 50);
 		stacks[1] = new StackFlashback(stackType, 50);
@@ -75,20 +78,48 @@ public class FlashBackSkill {
 		contActions = 0;
 	}
 	
+	private void addOldHeroGraphic()
+	{
+		Character oldHero = new Character(hero.getX(), hero.getY(), hero.getSpriteSheet(), hero.getDir());
+		
+		oldHeroes.add(oldHero);
+	}
+	
+	public void clearOldHeroes()
+	{
+		oldHeroes.clear();
+	}
+	
+	public void drawOldHeroes()
+	{
+		for(int i=0; i < oldHeroes.size(); i++)
+			oldHeroes.get(i).draw();
+	}
+	
+	private void popAndRefreshGraphics(int index) throws Exception
+	{
+		System.out.println("POP Stack #" + (index+1) + " " + stacks[index].getSize() + "/" + stacks[index].getSizeMax() + "; maxActionsReturn = " + maxActionsReturn);
+		ActionElement actionElement = (ActionElement) stacks[index].pop();
+		addOldHeroGraphic();
+		histBar.removeIcon();
+		
+		if(actionElement.isCharBackup())
+			restoreChar(actionElement);
+		else
+			restoreHp(actionElement);
+		contActions++;
+	}
+	
 	public boolean restore()
 	{
 		if(contActions >= maxActionsReturn) return false;
-		
-		ActionElement actionElement;
 		
 		if(stacks[stackActive].isEmpty())
 		{
 			if(stacks[otherStack].isEmpty())
 				return false;
 			try {
-				System.out.println("POP Stack #" + (otherStack+1) + " " + stacks[otherStack].getSize() + "/" + stacks[otherStack].getSizeMax() + "; maxActionsReturn = " + maxActionsReturn);
-				actionElement = (ActionElement) stacks[otherStack].pop();
-				histBar.removeIcon();
+				popAndRefreshGraphics(otherStack);
 				swapStackActive(); // Stack Active is empty, but the other stack have a free slot
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -98,9 +129,7 @@ public class FlashBackSkill {
 		else
 		{
 			try {
-				System.out.println("POP Stack #" + (stackActive+1) + " " + stacks[stackActive].getSize() + "/" + stacks[stackActive].getSizeMax() + "; maxActionsReturn = " + maxActionsReturn);
-				actionElement = (ActionElement) stacks[stackActive].pop();
-				histBar.removeIcon();
+				popAndRefreshGraphics(stackActive);
 			} catch (Exception e) {
 				e.printStackTrace();
 				return false;
@@ -108,12 +137,6 @@ public class FlashBackSkill {
 			
 		}
 		
-		//System.out.println("[sizeStack="+stacks[stackActive].getSize()+"]" + actionElement);
-		if(actionElement.isCharBackup())
-			restoreChar(actionElement);
-		else
-			restoreHp(actionElement);
-		contActions++;
 		return true;
 	}
 	
@@ -140,4 +163,14 @@ public class FlashBackSkill {
 			e.printStackTrace();
 		}
 	}
+
+	public ArrayList<Character> getOldHeroes() {
+		return oldHeroes;
+	}
+
+	public void setOldHeroes(ArrayList<Character> oldHeroes) {
+		this.oldHeroes = oldHeroes;
+	}
+	
+	
 }

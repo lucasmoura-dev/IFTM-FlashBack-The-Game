@@ -2,8 +2,6 @@ package br.edu.iftm.controllers;
 
 import org.newdawn.slick.geom.Point;
 
-import br.edu.iftm.view.Game;
-
 public class Window {
 	public static final int WIDTH = 800;
 	public static final int HEIGHT = 600;

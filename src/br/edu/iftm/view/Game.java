@@ -12,8 +12,8 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.geom.Point;
 
+import br.edu.iftm.controllers.FlashBackSkill;
 import br.edu.iftm.controllers.Window;
-import br.edu.iftm.models.FlashBackSkill;
 import br.edu.iftm.models.entities.Character;
 import br.edu.iftm.models.entities.HistoryBar;
 import br.edu.iftm.models.entities.LifeBar;
@@ -44,7 +44,8 @@ public class Game extends BasicGame{
 		bg.draw();	
 		drawShots(g);
 		
-		
+		if(skillOn)
+			flashBack.drawOldHeroes();
 		hero.draw();		
 		drawEnemies(g);
 		drawInterface();
@@ -163,6 +164,7 @@ public class Game extends BasicGame{
 		if(input.isKeyPressed(Input.KEY_LSHIFT))
 		{
 			System.out.println("Especial");
+			flashBack.clearOldHeroes();
 			flashBack.use();
 			hero.setSpriteSheet(ss_hero_skill);
 			skillOn = true;
