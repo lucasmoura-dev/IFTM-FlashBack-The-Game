@@ -40,7 +40,7 @@ public class Game extends BasicGame{
 	private KeysBars keysBar;
 	
 	
-	/* Defino se o jogo usará pilhas estatica ou dinamica */
+	/* Defino se o jogo usara pilhas estatica ou dinamica */
 	private static final int STACK_TYPE = Stack.TYPE_STATIC;
 	
 	/**
@@ -65,11 +65,7 @@ public class Game extends BasicGame{
 			flashBack.drawOldHeroes();
 		hero.draw();		
 		drawEnemies(g);
-		drawInterface();
-		
-		// Desenha o retângulo que representa a caixa de colisão do herói
-		//g.drawRect(hero.getX(), hero.getY(), hero.getImage().getWidth(), hero.getImage().getHeight());
-		
+		drawInterface();	
 	}
 	
 	/**
@@ -90,11 +86,7 @@ public class Game extends BasicGame{
 	private void drawEnemies(Graphics g)
 	{
 		for(Character enemy : enemies)
-		{
 			enemy.draw();
-			
-			//g.drawRect(enemy.getX(), enemy.getY(), enemy.getImage().getWidth(), enemy.getImage().getHeight());
-		}
 	}
 	
 	/**
@@ -104,18 +96,13 @@ public class Game extends BasicGame{
 	private void drawShots(Graphics g)
 	{
 		for (Shot shot : shots) 
-		{
 			shot.draw();
-			
-			// Cria um retângulo que representa a caixa de colisão do tiro
-			//g.drawRect(shot.getX(), shot.getY(), shot.getImage().getWidth(), shot.getImage().getHeight());
-		}
 	}
 
 	/***
-	 *  Esse é o primeiro metodo a ser executado quando o jogo for inicializado no metodo main.
+	 *  Esse e o primeiro metodo a ser executado quando o jogo for inicializado no metodo main.
 	 *  Nele, sao definidos os valores iniciais para as variaveis e instancia alguns objetos.
-	 *  Também, e adicionado a posicao inicial do heroi na pilha de acoes e cria um inimigo 
+	 *  Tambem, e adicionado a posicao inicial do heroi na pilha de acoes e cria um inimigo 
 	 *  inicial.
 	 */
 	
@@ -135,16 +122,16 @@ public class Game extends BasicGame{
 		lifebar = new LifeBar(STACK_TYPE);
 		histBar = new HistoryBar(new Point(Window.WIDTH-35, 0), new Image("images/bar.png"));
 		flashBack = new FlashBackSkill(STACK_TYPE, hero, lifebar, histBar);
-		flashBack.addBackup(hero); // Adiciona a posição inicial do heroi na lista de ações 
+		flashBack.addBackup(hero); // Adiciona a posicao inicial do heroi na lista de acoes 
 		keysBar = new KeysBars(); // Classe que representa as interfaces com as teclas desenhadas
 		createEnemy(); // Cria um inimigo inicial	
 	}
 	
 	
 	/**
-	 *  Nesse metodo, que funciona como um thread, e responsável por incrementar os
+	 *  Nesse metodo, que funciona como um thread, e responsavel por incrementar os
 	 *  contadores de tempo. Detectar as teclas pressionadas e ativar as suas 
-	 *  devidas funções. Essa funcao é responsavel em fazer um personagem andar
+	 *  devidas funcoes. Essa funcao e responsavel em fazer um personagem andar
 	 *  caso as teclas de movimento forem pressionadas, ativar a habilidade
 	 *  Flashback caso a barra de espaco for pressionada, e lançar um
 	 *  projetil caso a tecla Seta Cima for pressionada. Tambem verifica se a vida
@@ -154,7 +141,7 @@ public class Game extends BasicGame{
 	@Override
 	public void update(GameContainer container, int delta) throws SlickException {
 		
-		// Caso a vida do herói ficar vazia, finaliza o jogo
+		// Caso a vida do heroi ficar vazia, finaliza o jogo
 		if(lifebar.isEmpty())
 		{
 			// Game Over
@@ -166,7 +153,7 @@ public class Game extends BasicGame{
 		if(timerSkillCd <= SKILL_COLDOWN)
 			timerSkillCd += delta;
 		
-		// Pega as teclas pressionadas e ativa a repetição das teclas (o usuário pode segurar as teclas)
+		// Pega as teclas pressionadas e ativa a repeticao das teclas (o usuario pode segurar as teclas)
 		Input input = container.getInput();
 		input.enableKeyRepeat();
 		
@@ -180,14 +167,14 @@ public class Game extends BasicGame{
 			}
 		}
 		
-		// Chama o método responsavel por verificar se os projeteis acertaram alguem
+		// Chama o metodo responsavel por verificar se os projeteis acertaram alguem
 		detectProjectilesCollisions();
 		
 		// Se o temporizador de tiros chegar a 1s, cria um tiro para cada monstro do mapa
 		if(timerShots >= 1000)
 			createShotsForMonsters();
 		
-		// Se o temporizador de respawn de mosntros chegar a 3s, cria um novo monstro
+		// Se o temporizador de respawn de monstros chegar a 3s, cria um novo monstro
 		if(timerMonstersRespawn >= 3000)
 		{
 			createEnemy();
@@ -207,19 +194,19 @@ public class Game extends BasicGame{
 			skillOn = flashBack.restore(); // Desempilha uma acao da pilha de ações (movimentos ou vida perdida)
 			if(!skillOn)
 			{
-				// Se ele não conseguiu desempilhar, ou seja, acabou a pilha ou chegou no seu limite máximo
+				// Se ele nao conseguiu desempilhar, ou seja, acabou a pilha ou chegou no seu limite maximo
 				// de movimentos restaurados, volta a spriteSheet original do personagem e disabilita o 
-				// ícone 'X' (fica cinza) da barra de vida e reseta o temporizador da skill. Ou seja,
-				// o personagem precisará esperar 5 segundos para poder usar novamente.
+				// icone 'X' (fica cinza) da barra de vida e reseta o temporizador da skill. Ou seja,
+				// o personagem precisara esperar 5 segundos para poder usar novamente.
 				hero.setSpriteSheet(ss_hero);
 				lifebar.disableSkillIcon();
 				timerSkillCd = 0;
 			}
-			return; // Sai da função antes de detectar as teclas pressionadas
+			return; // Sai da funcao antes de detectar as teclas pressionadas
 		}	
 		
-		// Detecta qual tecla responsável por mover o personagem foi acionada. 
-		// Após mover o personagem, ele salva a nova posição na pilha de ações
+		// Detecta qual tecla responsavel por mover o personagem foi acionada. 
+		// Apos mover o personagem, ele salva a nova posicao na pilha de acoes
 		if(input.isKeyPressed(Input.KEY_W)) 
 		{
 			hero.moveUp(delta);
@@ -241,31 +228,31 @@ public class Game extends BasicGame{
 			flashBack.addBackup(hero);
 		}
 		
-		// Se apertou a barra de espaço e ela estiver disponível (temporizador maior ou igual
-		// ao tempo necessário para poder usar a habilidade).
+		// Se apertou a barra de espaço e ela estiver disponivel (temporizador maior ou igual
+		// ao tempo necessario para poder usar a habilidade).
 		if(input.isKeyPressed(Input.KEY_SPACE) && timerSkillCd >= SKILL_COLDOWN)
 		{
 			System.out.println("Especial");
-			flashBack.clearOldHeroes(); // Limpa a lista que contém a trajetória dele quando ele usou a habilidade anteriormente
+			flashBack.clearOldHeroes(); // Limpa a lista que contem a trajetoria dele quando ele usou a habilidade anteriormente
 			flashBack.use(); // Inicia a habilidade flashback
-			hero.setSpriteSheet(ss_hero_skill); // Define a spritesheet do personagem para uma diferente (embaçada)
-			skillOn = true; // Flag que representa que a habilidade está ativa
+			hero.setSpriteSheet(ss_hero_skill); // Define a spritesheet do personagem para uma diferente (embacada)
+			skillOn = true; // Flag que representa que a habilidade esta ativa
 		}
 		
-		// Se pressionar a tecla Seta Cima, lança um novo tiro, iniciando com a posição e direção do personagem
+		// Se pressionar a tecla Seta Cima, lança um novo tiro, iniciando com a posicao e direcao do personagem
 		if(input.isKeyPressed(Input.KEY_UP))
 		{
 			Shot shot = new Shot(hero.getPosition(), hero.getDir());
-			shot.setShooterType(Projectile.TYPE_HERO); // Define a etiqueta do projétil como do tipo HERÓI
+			shot.setShooterType(Projectile.TYPE_HERO); // Define a etiqueta do projetil como do tipo HEROI
 			shots.add(shot);
 		}
 	}
 	
 	/**
-	 * De 1 em 1 segundo, essa função é chamada. Ela é responsável por criar os projéteis
-	 * dos inimigos (flechas). As flechas são criadas na posição do inimigo e na mesma 
-	 * direção, com uma velocidade de 0.5f. Os projéteis são etiquetados como do tipo
-	 * INIMIGO. O projétil criado é salvado na lista de todos os projéteis. 
+	 * De 1 em 1 segundo, essa funcao e chamada. Ela é responsavel por criar os projeteis
+	 * dos inimigos (flechas). As flechas sao criadas na posiçao do inimigo e na mesma 
+	 * direcao, com uma velocidade de 0.5f. Os projeteis são etiquetados como do tipo
+	 * INIMIGO. O projetil criado e salvado na lista de todos os projéteis. 
 	 */
 	private void createShotsForMonsters()
 	{
@@ -285,9 +272,9 @@ public class Game extends BasicGame{
 	}
 	
 	/**
-	 * Cria um inimigo em uma posição aleatório mas que atenda algumas restrições de posionamento.
-	 * As posições dos inimigos, precisam estar em uma distância mínima de 150px das bordas.
-	 * @throws SlickException Não foi possível criar o spritesheet do inimigo.
+	 * Cria um inimigo em uma posicao aleatorio mas que atenda algumas restricoes de posionamento.
+	 * As posicoes dos inimigos, precisam estar em uma distancia minima de 150px das bordas.
+	 * @throws SlickException Não foi possivel criar o spritesheet do inimigo.
 	 */
 	
 	private void createEnemy() throws SlickException
@@ -304,11 +291,11 @@ public class Game extends BasicGame{
 	}
 	
 	/** 
-	 * Verifica se algum projétil (flecha ou tiro) acertou alguém.
-	 * Para cada projétil, ele verifica se está colidinho com algum personagem(herói ou inimigo).
-	 * Caso colida com algum personagem, ele verifica quem atirou o projétil, impedindo
-	 * que um inimigo acerte outro inimigo. O herói só pode acertar os inimigos, e os
-	 * inimigos só podem acertar o herói.
+	 * Verifica se algum projetil (flecha ou tiro) acertou alguem.
+	 * Para cada projetil, ele verifica se esta colidinho com algum personagem(heroi ou inimigo).
+	 * Caso colida com algum personagem, ele verifica quem atirou o projetil, impedindo
+	 * que um inimigo acerte outro inimigo. O heroi so pode acertar os inimigos, e os
+	 * inimigos so podem acertar o heroi.
 	 */
 	
 	private void detectProjectilesCollisions()
@@ -333,7 +320,7 @@ public class Game extends BasicGame{
 			{
 				if(shots.get(i).collidesWith(hero))
 				{
-					if(skillOn) // The hero with the active skill becomes invulnerable
+					if(skillOn) // Define que o jogador fique invulneravel durante a habilidade de voltar no tempo, ou seja, ele nao sofre dano quando esta usando a habilidade
 						return;
 					lifebar.removeHp(1);
 					flashBack.addBackup(lifebar.getHp());
@@ -344,15 +331,15 @@ public class Game extends BasicGame{
 	}
 	
 	/*
-	 * Responsável por iniciar o jogo
-	 * Define configurações do jogo (mostrar FPS, resolução da janela, define o FPS máximo de 59)
+	 * Responsavel por iniciar o jogo
+	 * Define configuracoes do jogo (mostrar FPS, resolucao da janela, define o FPS maximo de 59)
 	*/
 	public static void main(String[] args) throws SlickException {
 		AppGameContainer ap = new AppGameContainer(new Game("Jogo Flasback"));
 		ap.setShowFPS(false);
 		ap.setDisplayMode(Window.WIDTH, Window.HEIGHT, false);
 		ap.setTargetFrameRate(Window.FPS);
-		ap.start(); // Após configurado, inicia o jogo
+		ap.start(); // Apos configurado, inicia o jogo
 	}
 
 }
