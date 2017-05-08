@@ -37,6 +37,9 @@ public class Game extends BasicGame{
 	private HistoryBar histBar;
 	private static final int SKILL_COLDOWN = 5000;
 	private KeysBars keysBar;
+	
+	
+	/* Defino se o jogo usará pilhas estática ou dinâmica */
 	private static final int STACK_TYPE = Stack.TYPE_STATIC;
 	
 	/**
