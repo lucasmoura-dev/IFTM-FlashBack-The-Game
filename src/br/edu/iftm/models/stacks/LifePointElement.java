@@ -1,6 +1,7 @@
 package br.edu.iftm.models.stacks;
 
 public class LifePointElement extends DataElement{
+	// Valor que representa o elemento na pilha. Ex: 1 de hp
 	private int value;
 	
 	public LifePointElement(int value)

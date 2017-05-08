@@ -2,16 +2,20 @@ package br.edu.iftm.models.stacks.flashback;
 
 import org.newdawn.slick.geom.Point;
 
+/**
+ * Contem as informacoes do heroi: id da sprite, direcao, posicao atual e velocidade
+ *
+ */
 public class CharacterBackup {
 	private int spriteOffX = 0;
 	private int dir;
 	private Point pos;
 	private float speed;
 	
-	/**
-	 * @param spriteOffX
-	 * @param dir
-	 * @param pos
+	/** Constroi com as informacoes da id da sprite, direcao, posicao e velocidade.
+	 * @param spriteOffX Id da sprite do heroi
+	 * @param dir Direcao do heroi
+	 * @param pos Posicao do heroi nesse momento
 	 */
 	public CharacterBackup(int spriteOffX, int dir, Point pos, float speed) {
 		this.spriteOffX = spriteOffX;
