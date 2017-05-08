@@ -39,11 +39,11 @@ public class Game extends BasicGame{
 	private KeysBars keysBar;
 	
 	
-	/* Defino se o jogo usará pilhas estática ou dinâmica */
+	/* Defino se o jogo usará pilhas estatica ou dinamica */
 	private static final int STACK_TYPE = Stack.TYPE_STATIC;
 	
 	/**
-	 * Construtor que inicia o jogo com o título definido do método main
+	 * Construtor que inicia o jogo com o titulo definido do metodo main
 	 * @param title
 	 */
 	public Game(String title) {
@@ -51,8 +51,8 @@ public class Game extends BasicGame{
 	}
 
 	/**
-	 * Método responsável por desenhar os gráficos na tela. Nele, é desenhado o mapa, 
-	 * os projéteis, o rastro dos heróis (trajeto) quando ele usa a habilidade, 
+	 * Metodo responsavel por desenhar os graficos na tela. Nele, e desenhado o mapa, 
+	 * os projeteis, o rastro dos herois (trajeto) quando ele usa a habilidade, 
 	 * os inimigos e a interface.
 	 */
 	@Override
@@ -72,7 +72,7 @@ public class Game extends BasicGame{
 	}
 	
 	/**
-	 * Desenha a interface na tela (barra de vida, barra com as teclas e barra com o histórico de ações
+	 * Desenha a interface na tela (barra de vida, barra com as teclas e barra com o historico de açoes
 	 * empilhadas.
 	 */
 	private void drawInterface()
@@ -84,7 +84,7 @@ public class Game extends BasicGame{
 	
 	/**
 	 * Desenha todos os inimigos na tela
-	 * @param g Graphics para poder desenhar o retângulo da caixa de colisão do inimigo
+	 * @param g Graphics para poder desenhar o retangulo da caixa de colisao do inimigo
 	 */
 	private void drawEnemies(Graphics g)
 	{
@@ -97,8 +97,8 @@ public class Game extends BasicGame{
 	}
 	
 	/**
-	 * Desenha todos os projéteis(tiro e flechas) na tela
-	 * @param g Graphics para poder desenhar o retângulo da caixa de colisão no tiro
+	 * Desenha todos os projeteis(tiro e flechas) na tela
+	 * @param g Graphics para poder desenhar o retangulo da caixa de colisao no tiro
 	 */
 	private void drawShots(Graphics g)
 	{
@@ -112,9 +112,9 @@ public class Game extends BasicGame{
 	}
 
 	/***
-	 *  Esse é o primeiro método a ser executado quando o jogo for inicializado no método main.
-	 *  Nele, são definidos os valores iniciais para as variáveis e instancia alguns objetos.
-	 *  Também, é adicionado a posição inicial do herói na pilha de ações e cria um inimigo 
+	 *  Esse é o primeiro metodo a ser executado quando o jogo for inicializado no metodo main.
+	 *  Nele, sao definidos os valores iniciais para as variaveis e instancia alguns objetos.
+	 *  Também, e adicionado a posicao inicial do heroi na pilha de acoes e cria um inimigo 
 	 *  inicial.
 	 */
 	
@@ -129,25 +129,25 @@ public class Game extends BasicGame{
 		ss_hero = new SpriteSheet("/images/char.png", 48, 48);
 		ss_hero_skill = new SpriteSheet("/images/char_flashback.png", 48, 48);
 		hero = new Character(100, 100, ss_hero, Character.SPRITE_DOWN);
-		hero.defineLimWidthSprite(10); // Serve para calibrar a caixa de colisão do peronagem quando ele chega perto dos limites da tela
-		hero.defineLimHeightSprite(1);// Serve para calibrar a caixa de colisão do peronagem quando ele chega perto dos limites da tela
+		hero.defineLimWidthSprite(10); // Serve para calibrar a caixa de colisao do peronagem quando ele chega perto dos limites da tela
+		hero.defineLimHeightSprite(1);// Serve para calibrar a caixa de colisao do peronagem quando ele chega perto dos limites da tela
 		lifebar = new LifeBar(STACK_TYPE);
-		histBar = new HistoryBar(new Point(Window.WIDTH-35, 0), new Image("images/bar.png"), 0);
+		histBar = new HistoryBar(new Point(Window.WIDTH-35, 0), new Image("images/bar.png"));
 		flashBack = new FlashBackSkill(STACK_TYPE, hero, lifebar, histBar);
-		flashBack.addBackup(hero); // Adiciona a posição inicial do herói na lista de ações 
+		flashBack.addBackup(hero); // Adiciona a posição inicial do heroi na lista de ações 
 		keysBar = new KeysBars(); // Classe que representa as interfaces com as teclas desenhadas
 		createEnemy(); // Cria um inimigo inicial	
 	}
 	
 	
 	/**
-	 *  Nesse método, que funciona como um thread, é responsável por incrementar os
+	 *  Nesse metodo, que funciona como um thread, e responsável por incrementar os
 	 *  contadores de tempo. Detectar as teclas pressionadas e ativar as suas 
-	 *  devidas funções. Essa função é responsável em fazer um personagem andar
-	 *  caso as teclas de movimento foram pressionadas, ativar a habilidade
-	 *  Flashback caso a barra de espaço for pressionada, e lançar um
-	 *  projétil caso a tecla Seta Cima for pressionada. Também verifica se a vida
-	 *  do herói está vazia, para finalizar o jogo.
+	 *  devidas funções. Essa funcao é responsavel em fazer um personagem andar
+	 *  caso as teclas de movimento forem pressionadas, ativar a habilidade
+	 *  Flashback caso a barra de espaco for pressionada, e lançar um
+	 *  projetil caso a tecla Seta Cima for pressionada. Tambem verifica se a vida
+	 *  do heroi esta vazia, para finalizar o jogo.
 	 */
 	
 	@Override
@@ -170,7 +170,7 @@ public class Game extends BasicGame{
 		input.enableKeyRepeat();
 		
 		
-		// Verifica cada projétil, caso um deles chegue nos limites do mapa, é destruído (removido)
+		// Verifica cada projetil, caso um deles chegue nos limites do mapa, e destruido (removido)
 		for(int i=0; i < shots.size(); i++)
 		{
 			if(!shots.get(i).moveShot(delta))
@@ -179,7 +179,7 @@ public class Game extends BasicGame{
 			}
 		}
 		
-		// Chama o método responsável por verificar se os projéteis acertaram alguém
+		// Chama o método responsavel por verificar se os projeteis acertaram alguem
 		detectProjectilesCollisions();
 		
 		// Se o temporizador de tiros chegar a 1s, cria um tiro para cada monstro do mapa
@@ -190,20 +190,20 @@ public class Game extends BasicGame{
 		if(timerMonstersRespawn >= 3000)
 		{
 			createEnemy();
-			timerMonstersRespawn = 0; // Reseta o temporizador, para recomeçar a contagem
+			timerMonstersRespawn = 0; // Reseta o temporizador, para recomecar a contagem
 		}
 		
 		// Se o temporizador da habilidade chegar ao tempo gasto para poder usar a habilidade novamente
-		// Ativa o ícone 'X' na barra de vida (fica azul)
+		// Ativa o icone 'X' na barra de vida (fica azul)
 		if(timerSkillCd >= SKILL_COLDOWN)
 		{
 			lifebar.enableSkillIcon();
 		}
 		
-		// Se a habilidade Flashback estiver sendo usada, disabilita a detecção das teclas
+		// Se a habilidade Flashback estiver sendo usada, disabilita a deteccao das teclas
 		if(skillOn)
 		{
-			skillOn = flashBack.restore(); // Desempilha uma ação da pilha de ações (movimentos ou vida perdida)
+			skillOn = flashBack.restore(); // Desempilha uma acao da pilha de ações (movimentos ou vida perdida)
 			if(!skillOn)
 			{
 				// Se ele não conseguiu desempilhar, ou seja, acabou a pilha ou chegou no seu limite máximo

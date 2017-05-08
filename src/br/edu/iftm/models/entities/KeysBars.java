@@ -5,9 +5,17 @@ import org.newdawn.slick.SlickException;
 
 import br.edu.iftm.controllers.Window;
 
+/**
+ * Responsavel por criar as janelas com o guia das teclas e suas acoes.
+ */
 public class KeysBars{
 	private Image barLeft, barRight;
 	private Image keyW, keyWOn, keyA, keyAOn, keyS, keySOn, keyD, keyDOn, keySpace, keySpaceOn, keyUp, keyUpOn;
+	
+	
+	/**
+	 * Constroi a classe instanciando as imagens das teclas e barras(esquerda e direita).
+	 */
 	public KeysBars() {
 		try {
 			barLeft = new Image("images/bar_keys.png");
@@ -37,6 +45,9 @@ public class KeysBars{
 		
 	}
 	
+	/**
+	 * Desenha as barras(janelas) esquerda e direita e as imagas das teclas
+	 */
 	public void draw()
 	{
 		barLeft.draw(0, Window.HEIGHT-barLeft.getHeight());
@@ -44,6 +55,9 @@ public class KeysBars{
 		drawKeys();
 	}
 	
+	/**
+	 * Desenha as teclas
+	 */
 	private void drawKeys()
 	{
 		keyW.draw(27, Window.HEIGHT-100+8);
